@@ -30,6 +30,10 @@ def separateColorChannels(filePath):
     greenChannel = Image.fromarray(greenChannel)
     blueChannel = Image.fromarray(blueChannel)
     
-    redChannel.save("Ombra_red.jpg")
-    greenChannel.save("Ombra_green.jpg")
-    blueChannel.save("Ombra_blue.jpg")
+    redChannel.save("Ondra_red.jpg")
+    greenChannel.save("Ondra_green.jpg")
+    blueChannel.save("Ondra_blue.jpg")
+
+def grayifyImage(filePath):
+    image = Image.open(filePath).convert("L")
+    image.save("Ondra_grayscale.jpg")
