@@ -1,0 +1,7 @@
+*red.jpg
+*green.jpg
+*blue.jpg
+__pycache__/
+*.pyc
+*.swp
+
