@@ -19,6 +19,8 @@ def questionOne():
 def questionTwo():
     colorchannels.grayifyImage("./Ondra_sampling.jpg")
     colorchannels.displayImage("./Ondra_gray.jpg")
+    colorchannels.bitPlaneSlicing("./Ondra_gray.jpg") 
+
 
 def questionThree():
     colorchannels.intensityProfile("./Ondra_gray.jpg")
