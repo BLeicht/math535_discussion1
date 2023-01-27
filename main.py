@@ -11,7 +11,7 @@ def main():
 
     #Question 2
     colorchannels.grayifyImage("./Ondra_sampling.jpg")
-    colorchannels.displayImage("./Ondra_grayscale.jpg")
+    colorchannels.displayImage("./Ondra_gray.jpg")
 
 if __name__ == "__main__":
     main()

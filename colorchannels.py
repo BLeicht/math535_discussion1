@@ -36,4 +36,4 @@ def separateColorChannels(filePath):
 
 def grayifyImage(filePath):
     image = Image.open(filePath).convert("L")
-    image.save("Ondra_grayscale.jpg")
+    image.save("Ondra_gray.jpg")
