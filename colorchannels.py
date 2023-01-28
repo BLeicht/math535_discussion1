@@ -1,7 +1,7 @@
 from PIL import Image
 import numpy as np
 from skimage.measure import profile_line
-from skimage import io
+from skimage import io, exposure
 import matplotlib.pyplot as plt
 
 # takes in image filepath and displays image in default viewer
@@ -48,49 +48,25 @@ def grayifyImage(filePath):
 
 # splits the image into its bit planes
 def bitPlaneSlicing(filePath):
+    print("Slicing bit planes, one sec!\n")
+
     image = io.imread(filePath, as_gray=True)
-    
-    bitPlaneOne = np.zeros((808, 1010))
-    bitPlaneTwo = np.zeros((808, 1010))
-    bitPlaneThree = np.zeros((808, 1010))
-    bitPlaneFour = np.zeros((808, 1010))
-    bitPlaneFive = np.zeros((808, 1010))
-    bitPlaneSix = np.zeros((808, 1010))
-    bitPlaneSeven = np.zeros((808, 1010))
-    bitPlaneEight = np.zeros((808, 1010))
-    
+
+    bitPlane = [np.zeros((808, 1010))]
+    for i in range(7):
+        bitPlane.append(np.zeros((808, 1010)))
+
     for rows in range(np.shape(image)[0]):
         for cols in range(np.shape(image)[1]):
-
             binaryNum = format(image[rows][cols], '#010b')
+            for i in range(8):
+                bitPlane[i][rows][cols] = binaryNum[i+2]*255
 
+    for i in range(8):
+        plane = Image.fromarray(bitPlane[i])
+        plane.show()
 
-            bitPlaneOne[rows][cols] = binaryNum[2]*255
-            bitPlaneTwo[rows][cols] = binaryNum[3]*255
-            bitPlaneThree[rows][cols] = binaryNum[4]*255
-            bitPlaneFour[rows][cols] = binaryNum[5]*255
-            bitPlaneFive[rows][cols] = binaryNum[6]*255
-            bitPlaneSix[rows][cols] = binaryNum[7]*255
-            bitPlaneSeven[rows][cols] = binaryNum[8]*255
-            bitPlaneEight[rows][cols] = binaryNum[9]*255
-
-    plane = Image.fromarray(bitPlaneOne)
-    plane.show()
-    plane = Image.fromarray(bitPlaneTwo)
-    plane.show()
-    plane = Image.fromarray(bitPlaneThree)
-    plane.show()
-    plane = Image.fromarray(bitPlaneFour)
-    plane.show()
-    plane = Image.fromarray(bitPlaneFive)
-    plane.show()
-    plane = Image.fromarray(bitPlaneSix)
-    plane.show()
-    plane = Image.fromarray(bitPlaneSeven)
-    plane.show()
-    plane = Image.fromarray(bitPlaneEight)
-    plane.show()
-
+# gives the intensity profile of a line from a given image
 def intensityProfile(filePath):
     image = io.imread(filePath, as_gray=True)
     
@@ -100,3 +76,66 @@ def intensityProfile(filePath):
     plt.ylabel('intensity')
     plt.xlabel('line path')
     plt.show()
+
+def histogramMaker(filePath):
+    image = io.imread(filePath)
+
+    colors = ("red", "green", "blue")
+
+    plt.figure()
+    plt.xlim([0, 256])
+
+    for channel_id, color in enumerate(colors):
+        histogram, bin_edges = np.histogram(image[:, :, channel_id], bins=256, range=(0, 256))
+        plt.plot(bin_edges[0:-1], histogram, color=color)
+
+
+    plt.title("Color histogram")
+    plt.xlabel("Color value")
+    plt.ylabel("Pixel count")
+
+    plt.show() 
+
+
+def addImages(filePathOne, filePathTwo):
+    imageOne = io.imread(filePathOne, as_gray=True)
+    imageTwo = io.imread(filePathTwo, as_gray=True)
+
+    outputImage = np.add(imageOne, imageTwo)
+    Image.fromarray(outputImage).show()
+    return outputImage
+
+def subImages(filePathOne, filePathTwo):
+    imageOne = io.imread(filePathOne, as_gray=True)
+    imageTwo = io.imread(filePathTwo, as_gray=True)
+
+    outputImage = np.subtract(imageOne, imageTwo)
+    Image.fromarray(outputImage).show()
+    return outputImage
+
+def multiplyImages(filePathOne, filePathTwo):
+    imageOne = io.imread(filePathOne, as_gray=True)
+    imageTwo = io.imread(filePathTwo, as_gray=True)
+
+    outputImage = np.multiply(imageOne, imageTwo)
+    Image.fromarray(outputImage).show()
+    return outputImage
+
+
+def andImages(filePathOne, filePathTwo):
+    imageOne = io.imread(filePathOne, as_gray = True)
+    imageTwo = io.imread(filePathTwo, as_gray = True)
+
+    outputImage = nnp.logical_and(imageOne, imageTwo)
+    Image.fromarray(outputImage).show()    
+    return outputImage
+
+def xorImages(filePathOne, filePathTwo):
+    imageOne = io.imread(filePathOne, as_gray=True)
+    imageTwo = io.imread(filePathTwo, as_gray=True)
+     
+    outputImage = np.logical_xor(imageOne, imageTwo)
+    
+    Image.fromarray(outputImage).show()
+
+    return outputImage

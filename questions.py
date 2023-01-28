@@ -1,10 +1,10 @@
 import colorchannels as colorchannels
 
 def main():
-    questionOne()
-    questionTwo()
-    questionThree()
-    #questionFour()
+    #questionOne()
+    #questionTwo()
+    #questionThree()
+    questionFour()
     #questionFive()
 
 def questionOne():
@@ -24,3 +24,13 @@ def questionTwo():
 
 def questionThree():
     colorchannels.intensityProfile("./Ondra_gray.jpg")
+
+def questionFour():
+    colorchannels.histogramMakerRGB("./Ondra_sampling.jpg")
+
+
+def questionFive():
+    colorchannels.addImages("./Ondra_red.jpg", "./Ondra_blue.jpg")
+    colorchannels.xorImages("./Ondra_sampling.jpg", "./Ondra_green.jpg")
+    colorchannels.bitShiftRightOne("./Ondra_sampling.jpg")
+
